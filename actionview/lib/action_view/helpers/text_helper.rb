@@ -194,7 +194,12 @@ module ActionView
         word = if (count == 1 || count =~ /^1(\.0+)?$/)
           singular
         else
-          plural || singular.pluralize
+          if singular == "music"
+            "musicese"
+          else
+            plural || singular.pluralize
+          end
+
         end
 
         "#{count || 0} #{word}"
