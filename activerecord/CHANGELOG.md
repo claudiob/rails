@@ -80,7 +80,7 @@
     *Arun Agrawal*
 
 
-## Rails 4.1.2 (unreleased) ##
+## Rails 4.1.2 (June 26, 2014) ##
 
 *   Fix redefine a has_and_belongs_to_many inside inherited class
     Fixing regression case, where redefining the same has_an_belongs_to_many
