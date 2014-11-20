@@ -405,6 +405,8 @@ module ActionView
       def form_for(record, options = {}, &block)
         raise ArgumentError, "Missing block" unless block_given?
         html_options = options[:html] ||= {}
+        options[:html].delete :remote
+        options[:html].delete :method
 
         case record
         when String, Symbol

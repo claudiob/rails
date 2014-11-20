@@ -1806,7 +1806,7 @@ class FormHelperTest < ActionView::TestCase
       concat f.check_box(:secret)
     end
 
-    expected =  whole_form("/", "create-post", "edit_post", method: "delete") do
+    expected =  whole_form("/", "create-post", "edit_post", method: "patch") do
       "<input name='post[title]' type='text' id='post_title' value='Hello World' />" +
       "<textarea name='post[body]' id='post_body'>\nBack to the hill and over it again!</textarea>" +
       "<input name='post[secret]' type='hidden' value='0' />" +
@@ -1836,11 +1836,11 @@ class FormHelperTest < ActionView::TestCase
   def test_form_for_with_search_field
     # Test case for bug which would emit an "object" attribute
     # when used with form_for using a search_field form helper
-    form_for(Post.new, url: "/search", html: { id: "search-post", method: :get }) do |f|
+    form_for(Post.new, url: "/search", html: { id: "search-post" }) do |f|
       concat f.search_field(:title)
     end
 
-    expected =  whole_form("/search", "search-post", "new_post", method: "get") do
+    expected =  whole_form("/search", "search-post", "new_post") do
       "<input name='post[title]' type='search' id='post_title' />"
     end
 
@@ -1871,7 +1871,7 @@ class FormHelperTest < ActionView::TestCase
       concat f.check_box(:secret)
     end
 
-    expected =  whole_form("/", "create-post", "edit_post", method: "patch", remote: true) do
+    expected =  whole_form("/", "create-post", "edit_post", method: "patch") do
       "<input name='post[title]' type='text' id='post_title' value='Hello World' />" +
       "<textarea name='post[body]' id='post_body'>\nBack to the hill and over it again!</textarea>" +
       "<input name='post[secret]' type='hidden' value='0' />" +
