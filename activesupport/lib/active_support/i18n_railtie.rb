@@ -55,7 +55,7 @@ module I18n
 
       reloader = ActiveSupport::FileUpdateChecker.new(I18n.load_path.dup){ I18n.reload! }
       app.reloaders << reloader
-      ActionDispatch::Reloader.to_prepare { reloader.execute_if_updated }
+      ActionDispatch::Reloader.to_prepare { reloader.execute_if_updated.presence }
       reloader.execute
 
       @i18n_inited = true
