@@ -1,3 +1,22 @@
+*   Add Callbacks::CallbackChain.halt_and_display_warning_on_return_false
+
+    Setting `Callbacks::CallbackChain.halt_and_display_warning_on_return_false`
+    to true will let an app support the deprecated way of halting callback
+    chains by returning `false`.
+
+    Setting the value to false will tell the app to ignore any `false` value
+    returned by callbacks, and only halt the chain upon `throw(:abort)`.
+
+    The value can also be set with the Rails configuration option
+    `config.active_support.halt_callback_chains_on_return_false`.
+
+    When the configuration option is missing, its value is `true`, so older apps
+    ported to Rails 5.0 will not break (but display a deprecation warning).
+    For new Rails 5.0 apps, its value is set to `false` in an initializer, so
+    these apps will support the new behavior by default.
+
+    *claudiob*
+
 *   Deprecate returning `false` as a way to halt callback chains.
 
     Returning `false` in a callback will display a deprecation warning
