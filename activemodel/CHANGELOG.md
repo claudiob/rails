@@ -2,7 +2,7 @@
 
     Returning `false` in a `before_` callback will display a
     deprecation warning explaining that the preferred method to halt a callback
-    chain is to explicitly `throw(:abort)`.
+    chain is to explicitly `raise ActiveSupport::CallbackAborted`.
 
     *claudiob*
 

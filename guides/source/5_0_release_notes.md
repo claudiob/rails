@@ -68,11 +68,11 @@ deprecation warning about this upcoming change.
 post = Post.new
 post.save
 # Callback 1
-# DEPRECATION WARNING: Returning `false` in a callback will not implicitly halt a callback chain in the next release of Rails. To explicitly halt a callback chain, please use `throw :abort` instead.
+# DEPRECATION WARNING: Returning `false` in a callback will not implicitly halt a callback chain in the next release of Rails. To explicitly halt a callback chain, please use `raise ActiveSupport::CallbackAborted` instead.
 # => false
 ```
 
-Once you have replaced any `return false` with `throw :abort`, you can opt into
+Once you have replaced any `return false` with `raise ActiveSupport::CallbackAborted`, you can opt into
 the new behavior and remove the deprecation warning by adding the following
 configuration to your `config/application.rb`:
 
@@ -87,7 +87,7 @@ Active Model
 
 ### Deprecations
 
-* Deprecated returning `false` as a way to halt ActiveModel and ActiveModel::Valdiations callback chains. The recommended way is to `throw(:abort)`. ([Pull Request](https://github.com/rails/rails/pull/17227))
+* Deprecated returning `false` as a way to halt ActiveModel and ActiveModel::Valdiations callback chains. The recommended way is to `raise ActiveSupport::CallbackAborted`. ([Pull Request](https://github.com/rails/rails/pull/17227))
 
 
 Active Record
@@ -95,7 +95,7 @@ Active Record
 
 ### Deprecations
 
-* Deprecated returning `false` as a way to halt ActiveRecord callback chains. The recommended way is to `throw(:abort)`. ([Pull Request](https://github.com/rails/rails/pull/17227))
+* Deprecated returning `false` as a way to halt ActiveRecord callback chains. The recommended way is to `raise ActiveSupport::CallbackAborted`. ([Pull Request](https://github.com/rails/rails/pull/17227))
 
 Active Support
 --------------

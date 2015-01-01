@@ -6,7 +6,7 @@ module ActiveModel
   # Provides an interface for any class to have Active Record like callbacks.
   #
   # Like the Active Record methods, the callback chain is aborted as soon as
-  # one of the methods throws +:abort+.
+  # one of the methods raises ActiveSupport::CallbackAborted.
   #
   # First, extend ActiveModel::Callbacks from the class you are creating:
   #

@@ -660,7 +660,7 @@ class TransactionTest < ActiveRecord::TestCase
       meta = class << topic; self; end
       meta.send("define_method", "before_#{filter}_for_transaction") do
         Book.create
-        throw(:abort)
+        raise ActiveSupport::CallbackAborted
       end
     end
   end

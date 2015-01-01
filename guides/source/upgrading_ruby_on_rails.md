@@ -62,7 +62,7 @@ and neither is the action wrapped in callbacks.
 
 In Rails 5.0, returning `false` in a callback will not have this side effect
 of halting the callback chain. Instead, callback chains must be explicitly
-halted by calling `throw(:abort)`.
+halted by calling `raise ActiveSupport::CallbackAborted`.
 
 When you upgrade from Rails 4.2 to Rails 5.0, returning `false` in a callback
 will still halt the callback chain, but you will receive a deprecation warning

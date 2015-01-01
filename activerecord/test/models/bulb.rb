@@ -46,6 +46,6 @@ end
 
 class FailedBulb < Bulb
   before_destroy do
-    throw(:abort)
+    raise ActiveSupport::CallbackAborted
   end
 end

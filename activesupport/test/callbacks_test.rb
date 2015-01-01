@@ -565,7 +565,7 @@ module CallbacksTest
 
     def second
       @history << "second"
-      throw(:abort)
+      raise ActiveSupport::CallbackAborted
     end
 
     set_save_callbacks

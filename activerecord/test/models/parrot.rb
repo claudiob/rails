@@ -11,7 +11,7 @@ class Parrot < ActiveRecord::Base
   attr_accessor :cancel_save_from_callback
   before_save :cancel_save_callback_method, :if => :cancel_save_from_callback
   def cancel_save_callback_method
-    throw(:abort)
+    raise ActiveSupport::CallbackAborted
   end
 end
 

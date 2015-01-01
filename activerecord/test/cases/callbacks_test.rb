@@ -50,7 +50,7 @@ class CallbackDeveloperWithFalseValidation < CallbackDeveloper
 end
 
 class CallbackDeveloperWithHaltedValidation < CallbackDeveloper
-  before_validation proc { |model| model.history << [:before_validation, :throwing_abort]; throw(:abort) }
+  before_validation proc { |model| model.history << [:before_validation, :throwing_abort]; raise ActiveSupport::CallbackAborted }
   before_validation proc { |model| model.history << [:before_validation, :should_never_get_here] }
 end
 
@@ -88,7 +88,7 @@ class DeveloperWithCanceledCallbacks < ActiveRecord::Base
 
   private
     def cancel
-      throw(:abort)
+      raise ActiveSupport::CallbackAborted
     end
 end
 
@@ -161,10 +161,10 @@ class CallbackHaltedDeveloper < ActiveRecord::Base
   attr_reader   :after_save_called, :after_create_called, :after_update_called, :after_destroy_called
   attr_accessor :cancel_before_save, :cancel_before_create, :cancel_before_update, :cancel_before_destroy
 
-  before_save    { throw(:abort) if defined?(@cancel_before_save) }
-  before_create  { throw(:abort) if @cancel_before_create  }
-  before_update  { throw(:abort) if @cancel_before_update  }
-  before_destroy { throw(:abort) if @cancel_before_destroy }
+  before_save    { raise ActiveSupport::CallbackAborted if defined?(@cancel_before_save) }
+  before_create  { raise ActiveSupport::CallbackAborted if @cancel_before_create  }
+  before_update  { raise ActiveSupport::CallbackAborted if @cancel_before_update  }
+  before_destroy { raise ActiveSupport::CallbackAborted if @cancel_before_destroy }
 
   after_save    { @after_save_called    = true }
   after_update  { @after_update_called  = true }

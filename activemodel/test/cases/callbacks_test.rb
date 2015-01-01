@@ -34,12 +34,12 @@ class CallbacksTest < ActiveModel::TestCase
       @callbacks = []
       @valid = options[:valid]
       @before_create_returns = options.fetch(:before_create_returns, true)
-      @before_create_throws = options[:before_create_throws]
+      @before_create_raises = options[:before_create_raises]
     end
 
     def before_create
       @callbacks << :before_create
-      throw(@before_create_throws) if @before_create_throws
+      raise @before_create_raises if @before_create_raises
       @before_create_returns
     end
 
@@ -72,8 +72,8 @@ class CallbacksTest < ActiveModel::TestCase
     end
   end
 
-  test "the callback chain is halted when a callback throws :abort" do
-    model = ModelCallbacks.new(before_create_throws: :abort)
+  test "the callback chain is halted when a callback raises ActiveSupport::CallbackAborted" do
+    model = ModelCallbacks.new(before_create_raises: ActiveSupport::CallbackAborted)
     model.create
     assert_equal model.callbacks, [:before_create]
   end

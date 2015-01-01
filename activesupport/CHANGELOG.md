@@ -5,7 +5,7 @@
     chains by returning `false`.
 
     Setting the value to false will tell the app to ignore any `false` value
-    returned by callbacks, and only halt the chain upon `throw(:abort)`.
+    returned by callbacks, and only halt the chain upon `raise ActiveSupport::CallbackAborted`.
 
     The value can also be set with the Rails configuration option
     `config.active_support.halt_callback_chains_on_return_false`.
@@ -21,14 +21,15 @@
 
     Returning `false` in a callback will display a deprecation warning
     explaining that the preferred method to halt a callback chain is to
-    explicitly `throw(:abort)`.
+    explicitly `raise ActiveSupport::CallbackAborted`.
 
     *claudiob*
 
 *   Changes arguments and default value of CallbackChain's :terminator option
 
     Chains of callbacks defined without an explicit `:terminator` option will
-    now be halted as soon as a `before_` callback throws `:abort`.
+    now be halted as soon as a `before_` callback raises 
+    ActiveSupport::CallbackAborted.
 
     Chains of callbacks defined with a `:terminator` option will maintain their
     existing behavior of halting as soon as a `before_` callback matches the

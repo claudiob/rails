@@ -8,6 +8,10 @@ require 'active_support/core_ext/string/filters'
 require 'thread'
 
 module ActiveSupport
+  # Raised when aborting a callback
+  class CallbackAborted < StandardError
+  end
+
   # Callbacks are code hooks that are run at key points in an object's life cycle.
   # The typical use case is to have a base class define a set of callbacks
   # relevant to the other functionality it supplies, so that subclasses can
@@ -518,7 +522,7 @@ module ActiveSupport
 
       # If true, any callback returning +false+ will halt the entire callback
       # chain and display a deprecation message. If false, callback chains will
-      # only be halted by calling +throw :abort+. Defaults to +true+.
+      # only be halted by calling +raise ActiveSupport::CallbackAborted+. Defaults to +true+.
       class_attribute :halt_and_display_warning_on_return_false
       self.halt_and_display_warning_on_return_false = true
 
@@ -601,13 +605,14 @@ module ActiveSupport
       def default_terminator
         Proc.new do |target, result_lambda|
           terminate = true
-          catch(:abort) do
+          begin
             result = result_lambda.call if result_lambda.is_a?(Proc)
             if halt_and_display_warning_on_return_false && result == false
               display_deprecation_warning_for_false_terminator
             else
               terminate = false
             end
+          rescue CallbackAborted
           end
           terminate
         end
@@ -616,7 +621,7 @@ module ActiveSupport
       def display_deprecation_warning_for_false_terminator
         ActiveSupport::Deprecation.warn(<<-MSG.squish)
           Returning `false` in a callback will not implicitly halt a callback chain in the next release of Rails.
-          To explicitly halt a callback chain, please use `throw :abort` instead.
+          To explicitly halt a callback chain, please use `raise ActiveSupport::CallbackAborted` instead.
         MSG
       end
     end

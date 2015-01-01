@@ -114,7 +114,7 @@ module ActiveRecord
     # timestamps will not be updated.
     #
     # There's a series of callbacks associated with #save. If any of the
-    # <tt>before_*</tt> callbacks throws +:abort+ the action is cancelled and
+    # <tt>before_*</tt> callbacks raises ActiveSupport::CallbackAborted the action is cancelled and
     # #save returns +false+. See ActiveRecord::Callbacks for further
     # details.
     #
@@ -140,7 +140,7 @@ module ActiveRecord
     # timestamps will not be updated.
     #
     # There's a series of callbacks associated with #save!. If any of
-    # the <tt>before_*</tt> callbacks throws +:abort+ the action is cancelled
+    # the <tt>before_*</tt> callbacks raises ActiveSupport::CallbackAborted the action is cancelled
     # and #save! raises ActiveRecord::RecordNotSaved. See
     # ActiveRecord::Callbacks for further details.
     #
@@ -172,7 +172,7 @@ module ActiveRecord
     # that no changes should be made (since they can't be persisted).
     #
     # There's a series of callbacks associated with #destroy. If the
-    # <tt>before_destroy</tt> callback throws +:abort+ the action is cancelled
+    # <tt>before_destroy</tt> callback raises ActiveSupport::CallbackAborted the action is cancelled
     # and #destroy returns +false+.
     # See ActiveRecord::Callbacks for further details.
     def destroy
@@ -187,7 +187,7 @@ module ActiveRecord
     # that no changes should be made (since they can't be persisted).
     #
     # There's a series of callbacks associated with #destroy!. If the
-    # <tt>before_destroy</tt> callback throws +:abort+ the action is cancelled
+    # <tt>before_destroy</tt> callback raises ActiveSupport::CallbackAborted the action is cancelled
     # and #destroy! raises ActiveRecord::RecordNotDestroyed.
     # See ActiveRecord::Callbacks for further details.
     def destroy!

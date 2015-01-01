@@ -36,7 +36,7 @@ class DogDeprecatedBeforeValidatorReturningFalse < Dog
 end
 
 class DogBeforeValidatorThrowingAbort < Dog
-  before_validation { throw :abort }
+  before_validation { raise ActiveSupport::CallbackAborted }
   before_validation { self.history << 'before_validation_marker2' }
 end
 
