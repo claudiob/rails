@@ -2,6 +2,7 @@ require File.expand_path('../../../load_paths', __FILE__)
 
 require 'action_cable'
 require 'active_support/testing/autorun'
+require 'active_support/testing/method_call_assertions'
 
 
 require 'puma'
@@ -28,6 +29,10 @@ class << Faye::WebSocket
   def ensure_reactor_running
     # no-op
   end
+end
+
+class ActiveSupport::TestCase
+  include ActiveSupport::Testing::MethodCallAssertions
 end
 
 class ActionCable::TestCase < ActiveSupport::TestCase
