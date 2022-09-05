@@ -1203,6 +1203,14 @@ module ActiveRecord
       self
     end
 
+    %w(insert insert_all insert! insert_all! upsert upsert_all).each do |method|
+      class_eval <<~RUBY, __FILE__, __LINE__ + 1
+        def #{method}(...)
+          scoping { klass.#{method}(...) }.tap { reset }
+        end
+      RUBY
+    end
+
     # Returns sql statement for the relation.
     #
     #   User.where(name: 'Oscar').to_sql
